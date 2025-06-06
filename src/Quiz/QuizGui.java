@@ -4,26 +4,35 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;			// Importiert die KeyFrame-Klasse für Animationen in JavaFX -> definiert eine Aktion, die zu einem bestimmten Zeitpunkt in einer Animation ausgeführt wird						 
 import javafx.animation.Timeline;			// Importiert Timeline-Klasse, die eine Abfolge von KeyFrames für Animationen verwaltet.
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;		// Importiert Application-Klasse, die die Einstiegsklasse für jede JavaFX-Anwendung darstellt.
-import javafx.scene.Scene;					// Importiert Scene-Klasse, die die "Bühne" für alle visuellen JavaFX-Elemente darstellt.
-import javafx.scene.control.*;				// Importiert alle Bedienelemente (Controls) wie Label, Button, TextField usw. -> Gehört zur GUI.
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;			// Importiert Pane-Layout, ein generisches Layout zur Positionierung von GUI-Elementen.
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;			// Importiert VBox-Layout, das Elemente vertikal untereinander anordnet.
-import javafx.scene.text.Font;				// Schriftarten, größe eines Textes in der GUI
-import javafx.stage.Stage;					// Importiert Stage-Klasse, die das Hauptfenster einer JavaFX-Anwendung repräsentiert.
-import javafx.util.Duration;				// Importiert Duration-Klasse, die für zeitbasierte Operationen wie Animationen verwendet wird.
-import javafx.geometry.Rectangle2D;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
-import javafx.application.Platform;
-import javafx.scene.transform.Rotate;
-import javafx.geometry.Bounds;
 import javafx.animation.Animation;
+
+import javafx.scene.Scene;					// Importiert Scene-Klasse, die die "Bühne" für alle visuellen JavaFX-Elemente darstellt.
+import javafx.scene.control.*;				// Importiert alle Bedienelemente (Controls) wie Label, Button, TextField usw. -> Gehört zur GUI.
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;			// Importiert-Layout, ein generisches Layout zur Positionierung von GUI-Elementen.
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;			// Importiert VBox-Layout, das Elemente vertikal untereinander anordnet.
+import javafx.scene.text.Font;				// Schriftarten, größe eines Textes in der GUI
+import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Rotate;
+
+import javafx.application.Application;		// Importiert Application-Klasse, die die Einstiegsklasse für jede JavaFX-Anwendung darstellt.
+import javafx.application.Platform;
+
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.stage.Stage;					// Importiert Stage-Klasse, die das Hauptfenster einer JavaFX-Anwendung repräsentiert.
+import javafx.util.Duration;				// Importiert Duration-Klasse, die für zeitbasierte Operationen wie Animationen verwendet wird.
+
+
+
 
 
 public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Application und ist somit eine JavaFX-Anwendung.
@@ -66,8 +75,7 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
     private ImageView baum2ImageView;
     private ImageView baum3ImageView;
     private ImageView baum4ImageView;
-    ;
-    
+       
 // Tiere und Artenvielfalt    
     private ImageView erdlochImageView;
     private ImageView erdmaennchen1ImageView;
@@ -82,13 +90,25 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
     private ImageView mondBlickImageView;
     private ImageView erdRotationImageView;
     private ImageView sterneImageView;
+    private ImageView komet1ImageView;
+    private ImageView komet2ImageView;
+    private ImageView komet3ImageView;
 
+// VBoxen wo Text und Buttons drin sind    
+    private VBox infoBox;		// Kategorie und Frage
+    private VBox antwortBox;	// AntwortButtons
+    private VBox bottomBox;		// Punktzahl und Link
+
+    
+    
 
 
     public static void main(String[] args) {			// main-Methode ist der Einstiegspunkt der Anwendung.
     	launch(args);									// Startet die JavaFX-Anwendung – ruft automatisch die start(Stage stage)-Methode auf
     	}
 
+    
+    
     @Override
     public void start(Stage primaryStage) {
         quizGame = new QuizGame();
@@ -98,9 +118,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-
+//===========================================================
+// =================[Klimawandel und Energie]================
+//===========================================================
         
-// AKW als Hintergrund für Kategorie: [Klimawandel und Energie]
+// AKW als Hintergrund
         akwImageView = new ImageView(new Image(getClass().getResource("/images/Klimawandel_und_Energie/AKW.png").toExternalForm()));
         akwImageView.setFitWidth(800);
         akwImageView.setFitHeight(600);
@@ -151,86 +173,190 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
        
         
         
-// Tisch als Hintergrund für Kategorie [Ernaehrung und Lebensmittelverschwendung]
+//============================================================================
+//=================[Ernaehrung und Lebensmittelverschwendung]=================
+//============================================================================
+        
+// Tisch als Hintergrund
         tischImageView = new ImageView(new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/Tisch.png").toExternalForm()));
         tischImageView.setFitWidth(800);
         tischImageView.setFitHeight(600);
         tischImageView.setPreserveRatio(false);
         tischImageView.setVisible(false);   
         
-// Lebensmitte1 hinzufügen:
+// Lebensmittel1 hinzufügen:
         essen1ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/Lebensmittel1.png").toExternalForm()));
         essen1ImageView.setX(570);
         essen1ImageView.setY(350);
         essen1ImageView.setFitWidth(250);
         essen1ImageView.setFitHeight(250);
         essen1ImageView.setVisible(false);
-// Lebensmittel1: Transparent -> Sichtbar
-        FadeTransition essen1 = new FadeTransition(Duration.seconds(3.5), essen1ImageView);
-        essen1.setFromValue(0.0);
-        essen1.setToValue(1.0);
-        essen1.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel1: Einblenden
+        FadeTransition essen1Einblenden = new FadeTransition(Duration.seconds(3.5), essen1ImageView);
+        essen1Einblenden.setFromValue(0.0);
+        essen1Einblenden.setToValue(1.0);
+        essen1Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause1NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel1: Ausblenden
+        FadeTransition essen1Ausblenden = new FadeTransition(Duration.seconds(3.5), essen1ImageView);
+        essen1Ausblenden.setFromValue(1.0);
+        essen1Ausblenden.setToValue(0.0);
+        essen1Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause1VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel1: Zweites Einblenden
+        FadeTransition essen1ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen1ImageView);
+        essen1ZweitesEinblenden.setFromValue(0.0);
+        essen1ZweitesEinblenden.setToValue(1.0);
+        essen1ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz1 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen1 = new SequentialTransition(warteKurz1, essen1);
-        animationEssen1.play();
-  
-// Lebensmitte2 hinzufügen:
-        essen2ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/ServierVorschlag1.png").toExternalForm()));
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen1 = new SequentialTransition(
+            warteKurz1,
+            essen1Einblenden,
+            pause1NachEinblenden,
+            essen1Ausblenden,
+            pause1VorZweitemEinblenden,
+            essen1ZweitesEinblenden
+        	);
+// Animation starten
+        	animationEssen1.play();
+// Animation endlos wiederholen:
+        	animationEssen1.setCycleCount(Animation.INDEFINITE);
+ 
+        
+// Lebensmittel2 hinzufügen:
+        essen2ImageView = new ImageView(new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/ServierVorschlag1.png").toExternalForm()));
         essen2ImageView.setX(200);
         essen2ImageView.setY(300);
         essen2ImageView.setFitWidth(300);
         essen2ImageView.setFitHeight(300);
-        essen2ImageView.setVisible(false);   
-// Lebensmittel2: Transparent -> Sichtbar
-        FadeTransition essen2 = new FadeTransition(Duration.seconds(3.5), essen2ImageView);
-        essen2.setFromValue(0.0);
-        essen2.setToValue(1.0);
-        essen2.setCycleCount(1);
-// Pause vor Animationsstart:
+        essen2ImageView.setVisible(false);
+// Lebensmittel2: Einblenden
+        FadeTransition essen2Einblenden = new FadeTransition(Duration.seconds(3.5), essen2ImageView);
+        essen2Einblenden.setFromValue(0.0);
+        essen2Einblenden.setToValue(1.0);
+        essen2Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause2NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel2: Ausblenden
+        FadeTransition essen2Ausblenden = new FadeTransition(Duration.seconds(3.5), essen2ImageView);
+        essen2Ausblenden.setFromValue(1.0);
+        essen2Ausblenden.setToValue(0.0);
+        essen2Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause2VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel2: Zweites Einblenden
+        FadeTransition essen2ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen2ImageView);
+        essen2ZweitesEinblenden.setFromValue(0.0);
+        essen2ZweitesEinblenden.setToValue(1.0);
+        essen2ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz2 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen2 = new SequentialTransition(warteKurz2, essen2);
-        animationEssen2.play();        
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen2 = new SequentialTransition(
+            warteKurz2,
+            essen2Einblenden,
+            pause2NachEinblenden,
+            essen2Ausblenden,
+            pause2VorZweitemEinblenden,
+            essen2ZweitesEinblenden
+        	);
+// Animation starten
+        	animationEssen2.play();
+// Animation endlos wiederholen:
+        	animationEssen2.setCycleCount(Animation.INDEFINITE);
+     
         
-// Lebensmitte3 hinzufügen:
+// Lebensmittel3 hinzufügen:
         essen3ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/Trocken2.png").toExternalForm()));
         essen3ImageView.setX(400);
         essen3ImageView.setY(380);
         essen3ImageView.setFitWidth(250);
         essen3ImageView.setFitHeight(230);
         essen3ImageView.setVisible(false);
-// Lebensmittel3: Transparent -> Sichtbar
-        FadeTransition essen3 = new FadeTransition(Duration.seconds(3.5), essen3ImageView);
-        essen3.setFromValue(0.0);
-        essen3.setToValue(1.0);
-        essen3.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel3: Einblenden
+        FadeTransition essen3Einblenden = new FadeTransition(Duration.seconds(3.5), essen3ImageView);
+        essen3Einblenden.setFromValue(0.0);
+        essen3Einblenden.setToValue(1.0);
+        essen3Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause3NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel3: Ausblenden
+        FadeTransition essen3Ausblenden = new FadeTransition(Duration.seconds(3.5), essen3ImageView);
+        essen3Ausblenden.setFromValue(1.0);
+        essen3Ausblenden.setToValue(0.0);
+        essen3Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause3VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel3: Zweites Einblenden
+        FadeTransition essen3ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen3ImageView);
+        essen3ZweitesEinblenden.setFromValue(0.0);
+        essen3ZweitesEinblenden.setToValue(1.0);
+        essen3ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz3 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen3 = new SequentialTransition(warteKurz3, essen3);
-        animationEssen3.play(); 
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen3 = new SequentialTransition(
+            warteKurz3,
+            essen3Einblenden,
+            pause3NachEinblenden,
+            essen3Ausblenden,
+            pause3VorZweitemEinblenden,
+            essen3ZweitesEinblenden
+        );
+// Animation starten
+        	animationEssen3.play();
+// Animation endlos wiederholen:
+        	animationEssen3.setCycleCount(Animation.INDEFINITE);
               
-// Lebensmitte4 hinzufügen:
+        	
+// Lebensmittel4 hinzufügen:
         essen4ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/Trocken3.png").toExternalForm()));
         essen4ImageView.setX(180);
         essen4ImageView.setY(250);
         essen4ImageView.setFitWidth(350);
         essen4ImageView.setFitHeight(300);
         essen4ImageView.setVisible(false); 
-// Lebensmittel4: Transparent -> Sichtbar
-        FadeTransition essen4 = new FadeTransition(Duration.seconds(3.5), essen4ImageView);
-        essen4.setFromValue(0.0);
-        essen4.setToValue(1.0);
-        essen4.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel4: Einblenden
+        FadeTransition essen4Einblenden = new FadeTransition(Duration.seconds(3.5), essen4ImageView);
+        essen4Einblenden.setFromValue(0.0);
+        essen4Einblenden.setToValue(1.0);
+        essen4Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause4NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel4: Ausblenden
+        FadeTransition essen4Ausblenden = new FadeTransition(Duration.seconds(3.5), essen4ImageView);
+        essen4Ausblenden.setFromValue(1.0);
+        essen4Ausblenden.setToValue(0.0);
+        essen4Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause4VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel4: Zweites Einblenden
+        FadeTransition essen4ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen4ImageView);
+        essen4ZweitesEinblenden.setFromValue(0.0);
+        essen4ZweitesEinblenden.setToValue(1.0);
+        essen4ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz4 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen4 = new SequentialTransition(warteKurz4, essen4);
-        animationEssen4.play(); 
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen4 = new SequentialTransition(
+            warteKurz4,
+            essen4Einblenden,
+            pause4NachEinblenden,
+            essen4Ausblenden,
+            pause4VorZweitemEinblenden,
+            essen4ZweitesEinblenden
+        );
+// Animation starten
+        	animationEssen4.play();
+// Animation endlos wiederholen:
+        	animationEssen4.setCycleCount(Animation.INDEFINITE);
               
-// Lebensmitte5 hinzufügen:
+        	
+// Lebensmittel5 hinzufügen:
         essen5ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/TüteLebensmittel1.png").toExternalForm()));
         essen5ImageView.setX(-20);
         essen5ImageView.setY(320);
@@ -238,56 +364,134 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         essen5ImageView.setFitHeight(300);
         essen5ImageView.setVisible(false);
         essen5ImageView.setRotate(-10);
-// Lebensmittel5: Transparent -> Sichtbar
-        FadeTransition essen5 = new FadeTransition(Duration.seconds(3.5), essen5ImageView);
-        essen5.setFromValue(0.0);
-        essen5.setToValue(1.0);
-        essen5.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel5: Einblenden
+        FadeTransition essen5Einblenden = new FadeTransition(Duration.seconds(3.5), essen5ImageView);
+        essen5Einblenden.setFromValue(0.0);
+        essen5Einblenden.setToValue(1.0);
+        essen5Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause5NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel5: Ausblenden
+        FadeTransition essen5Ausblenden = new FadeTransition(Duration.seconds(3.5), essen5ImageView);
+        essen5Ausblenden.setFromValue(1.0);
+        essen5Ausblenden.setToValue(0.0);
+        essen5Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause5VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel5: Zweites Einblenden
+        FadeTransition essen5ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen5ImageView);
+        essen5ZweitesEinblenden.setFromValue(0.0);
+        essen5ZweitesEinblenden.setToValue(1.0);
+        essen5ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz5 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen5 = new SequentialTransition(warteKurz5, essen5);
-        animationEssen5.play();        
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen5 = new SequentialTransition(
+            warteKurz5,
+            essen5Einblenden,
+            pause5NachEinblenden,
+            essen5Ausblenden,
+            pause5VorZweitemEinblenden,
+            essen5ZweitesEinblenden
+        	);
+// Animation starten
+        	animationEssen5.play(); 
+// Animation endlos wiederholen:
+        	animationEssen5.setCycleCount(Animation.INDEFINITE);
+        	
               
-// Lebensmitte6 hinzufügen:
+// Lebensmittel6 hinzufügen:
         essen6ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/TüteLebensmittel2.png").toExternalForm()));
         essen6ImageView.setX(10);
         essen6ImageView.setY(200);
         essen6ImageView.setFitWidth(250);
         essen6ImageView.setFitHeight(250);
         essen6ImageView.setVisible(false); 
-// Lebensmittel3: Transparent -> Sichtbar
-        FadeTransition essen6 = new FadeTransition(Duration.seconds(3.5), essen6ImageView);
-        essen6.setFromValue(0.0);
-        essen6.setToValue(1.0);
-        essen6.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel6: Einblenden
+        FadeTransition essen6Einblenden = new FadeTransition(Duration.seconds(3.5), essen6ImageView);
+        essen6Einblenden.setFromValue(0.0);
+        essen6Einblenden.setToValue(1.0);
+        essen6Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause6NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel6: Ausblenden
+        FadeTransition essen6Ausblenden = new FadeTransition(Duration.seconds(3.5), essen6ImageView);
+        essen6Ausblenden.setFromValue(1.0);
+        essen6Ausblenden.setToValue(0.0);
+        essen6Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause6VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel6: Zweites Einblenden
+        FadeTransition essen6ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen6ImageView);
+        essen6ZweitesEinblenden.setFromValue(0.0);
+        essen6ZweitesEinblenden.setToValue(1.0);
+        essen6ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz6 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen6 = new SequentialTransition(warteKurz6, essen6);
-        animationEssen6.play();         
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen6 = new SequentialTransition(
+            warteKurz6,
+            essen6Einblenden,
+            pause6NachEinblenden,
+            essen6Ausblenden,
+            pause6VorZweitemEinblenden,
+            essen6ZweitesEinblenden
+        	);
+// Animation starten
+        	animationEssen6.play(); 
+// Animation endlos wiederholen:
+        	animationEssen6.setCycleCount(Animation.INDEFINITE);
+        	
                
-// Lebensmitte7 hinzufügen:
+// Lebensmittel7 hinzufügen:
         essen7ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/TüteLebensmittel3.png").toExternalForm()));
         essen7ImageView.setX(470);
         essen7ImageView.setY(130);
         essen7ImageView.setFitWidth(350);
         essen7ImageView.setFitHeight(350);
         essen7ImageView.setVisible(false);   
-// Lebensmittel7: Transparent -> Sichtbar
-        FadeTransition essen7 = new FadeTransition(Duration.seconds(3.5), essen7ImageView);
-        essen7.setFromValue(0.0);
-        essen7.setToValue(1.0);
-        essen7.setCycleCount(1);
-// Pause vor Animationsstart:
+// Lebensmittel7: Einblenden
+        FadeTransition essen7Einblenden = new FadeTransition(Duration.seconds(3.5), essen7ImageView);
+        essen7Einblenden.setFromValue(0.0);
+        essen7Einblenden.setToValue(1.0);
+        essen7Einblenden.setCycleCount(1);
+// Kurze Pause nach dem ersten Einblenden
+        PauseTransition pause7NachEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel7: Ausblenden
+        FadeTransition essen7Ausblenden = new FadeTransition(Duration.seconds(3.5), essen7ImageView);
+        essen7Ausblenden.setFromValue(1.0);
+        essen7Ausblenden.setToValue(0.0);
+        essen7Ausblenden.setCycleCount(1);
+// Kurze Pause vor dem zweiten Einblenden
+        PauseTransition pause7VorZweitemEinblenden = new PauseTransition(Duration.seconds(3));
+// Lebensmittel7: Zweites Einblenden
+        FadeTransition essen7ZweitesEinblenden = new FadeTransition(Duration.seconds(3.5), essen7ImageView);
+        essen7ZweitesEinblenden.setFromValue(0.0);
+        essen7ZweitesEinblenden.setToValue(1.0);
+        essen7ZweitesEinblenden.setCycleCount(1);
+// Startverzögerung
         PauseTransition warteKurz7 = new PauseTransition(Duration.seconds(6));
-// Beide zusammen in eine Sequenz
-        SequentialTransition animationEssen7 = new SequentialTransition(warteKurz7, essen7);
-        animationEssen7.play(); 
+// Alles zusammen in eine Sequenz
+        SequentialTransition animationEssen7 = new SequentialTransition(
+            warteKurz7,
+            essen7Einblenden,
+            pause7NachEinblenden,
+            essen7Ausblenden,
+            pause7VorZweitemEinblenden,
+            essen7ZweitesEinblenden
+        	);
+// Animation starten
+        	animationEssen7.play();
+// Animation endlos wiederholen:
+        	animationEssen7.setCycleCount(Animation.INDEFINITE);
         
+ 
         
+//======================================================
+//=================[Plastik und Müll]===================
+//======================================================
         
-// Mülldeponie als Hintergrund für Kategorie [Plastik und Müll]
+// Mülldeponie als Hintergrund
         muellDeponieImageView  = new ImageView(new Image(getClass().getResource("/images/Plastik_und_Muell/Muelldeponie.png").toExternalForm()));
         muellDeponieImageView.setFitWidth(800);
         muellDeponieImageView.setFitHeight(600);
@@ -325,10 +529,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
               
               
         
+//=========================================================
+//=================[Ressourcen der Erde]===================
+//=========================================================    
         
-        
- 
-// Waldweg als Hintergrund für Kategorie [Ressourcen der Erde]
+// Waldweg als Hintergrund
         waldWegImageView = new ImageView (new Image(getClass().getResource("/images/Ressourcen_der_Erde/Waldweg.png").toExternalForm()));
         waldWegImageView.setFitWidth(800);
         waldWegImageView.setFitHeight(600);
@@ -385,6 +590,7 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         neustartEndPause1.setCycleCount(Animation.INDEFINITE);
         neustartEndPause1.play();
         });      
+
         
 // Baum2 hinzufügen (unten rechts)
         Image baum2Image = new Image(getClass().getResource("/images/Ressourcen_der_Erde/Baum2.png").toExternalForm());
@@ -436,6 +642,7 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         neustartEndPause2.setCycleCount(Animation.INDEFINITE);
         neustartEndPause2.play(); 
         });   
+
         
 // Baum3 hinzufügen (oben links)
         Image baum3Image = new Image(getClass().getResource("/images/Ressourcen_der_Erde/Baum3.png").toExternalForm());
@@ -485,7 +692,8 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         neustartEndPause3.setCycleCount(Animation.INDEFINITE);
         neustartEndPause3.play(); 
         });
-       
+
+        
 // Baum4 hinzufügen (oben Rechts)
         Image baum4Image = new Image(getClass().getResource("/images/Ressourcen_der_Erde/Baum4.png").toExternalForm());
         baum4ImageView = new ImageView(baum4Image);
@@ -538,7 +746,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
 
         
         
-// Erdloch als Hintergrund hinzufügen [Tiere und Artenvielfalt]
+//=============================================================
+//=================[Tiere und Artenvielfalt]===================
+//=============================================================
+        
+// Erdloch als Hintergrund hinzufügen
         erdlochImageView = new ImageView (new Image(getClass().getResource("/images/Tiere_und_Artenvielfalt/Erdloch.png").toExternalForm()));
         erdlochImageView.setFitWidth(800);
         erdlochImageView.setFitHeight(600);
@@ -642,13 +854,18 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         animationErdmaennchen4.play();   
 
         
+
+//==========================================================
+//=================[Was kann ich tun?]======================
+//==========================================================
         
 // Mondblick als hintergrund hinzufügen [Was kann ich tun?]
         mondBlickImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/Mondblick.png").toExternalForm()));
         mondBlickImageView.setFitWidth(800);
         mondBlickImageView.setFitHeight(600);
         mondBlickImageView.setPreserveRatio(false);
-        mondBlickImageView.setVisible(false);       
+        mondBlickImageView.setVisible(false);  
+        
 // Sterne über den Weltraum legen
         sterneImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/Space2.png").toExternalForm()));
         sterneImageView.setX(-20);
@@ -657,7 +874,8 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         sterneImageView.setFitHeight(525);
         sterneImageView.setRotate(4.5);
         sterneImageView.setPreserveRatio(false);
-        sterneImageView.setVisible(false);        
+        sterneImageView.setVisible(false);
+        
 // Drehende Erde als Gif hinzufügen      
         erdRotationImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/globe1.gif").toExternalForm()));
         erdRotationImageView.setX(180);
@@ -666,59 +884,116 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         erdRotationImageView.setFitHeight(400);
         erdRotationImageView.setVisible(false);
         
+// Komet1 hinzufügen:
+        komet1ImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/Komet1.png").toExternalForm()));
+        komet1ImageView.setX(900);
+        komet1ImageView.setY(50);
+        komet1ImageView.setFitWidth(250);
+        komet1ImageView.setFitHeight(150);
+        komet1ImageView.setRotate(13);
+        komet1ImageView.setScaleY(1);
+        komet1ImageView.setPreserveRatio(false);
+        komet1ImageView.setVisible(false);
+// Komet1 animieren:
+        TranslateTransition moveKomet1 = new TranslateTransition(Duration.seconds(6), komet1ImageView);
+        moveKomet1.setByX(-1300);
+        moveKomet1.setByY(300);
+        moveKomet1.setAutoReverse(false);
+        moveKomet1.setCycleCount(TranslateTransition.INDEFINITE);
+        moveKomet1.setDuration(Duration.seconds(8)); 
+        moveKomet1.play();        
+        
+// Komet2 hinzufügen:
+        komet2ImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/Komet2.png").toExternalForm()));
+        komet2ImageView.setX(900);
+        komet2ImageView.setY(100);
+        komet2ImageView.setFitWidth(100);
+        komet2ImageView.setFitHeight(100);
+        komet2ImageView.setRotate(30);
+        komet2ImageView.setPreserveRatio(false);
+        komet2ImageView.setVisible(false);
+// Komet2 animieren:
+        TranslateTransition moveKomet2 = new TranslateTransition(Duration.seconds(6), komet2ImageView);
+        moveKomet2.setByX(-1300);
+        moveKomet2.setByY(250);
+        moveKomet2.setAutoReverse(false);
+        moveKomet2.setCycleCount(TranslateTransition.INDEFINITE);
+        moveKomet2.setDuration(Duration.seconds(2));
+        moveKomet2.play();
+        
+// Komet3 hinzufügen:
+        komet3ImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/Komet3.png").toExternalForm()));
+        komet3ImageView.setX(-100);
+        komet3ImageView.setY(300);
+        komet3ImageView.setFitWidth(170);
+        komet3ImageView.setFitHeight(200);
+        komet3ImageView.setRotate(100);
+        komet3ImageView.setScaleY(-1);
+        komet3ImageView.setPreserveRatio(false);
+        komet3ImageView.setVisible(false);
+// Komet3 animieren:
+        TranslateTransition moveKomet3 = new TranslateTransition(Duration.seconds(6), komet3ImageView);
+        moveKomet3.setByX(1300);
+        moveKomet3.setByY(-850);
+        moveKomet3.setAutoReverse(false);
+        moveKomet3.setCycleCount(TranslateTransition.INDEFINITE);
+        moveKomet3.setDuration(Duration.seconds(30));
+        moveKomet3.play();
         
         
-        
-        
+ 
 // Hintergrund hinzufügen:
-	backgroundPane = new Pane();
-	backgroundPane.getChildren().addAll(
+    	backgroundPane = new Pane();
+    	backgroundPane.getChildren().addAll(
 
 // Klimawandel und Energie
-		akwImageView,
-		rauchImageView1,
-		rauchImageView2,
+    		akwImageView,
+    		rauchImageView1,
+    		rauchImageView2,
 
 // Ernaehrung und Lebensmittelverschwendung
-		tischImageView,
-		essen6ImageView,
-		essen4ImageView,
-		essen7ImageView,		
-		essen5ImageView,
-		essen2ImageView,		
-		essen3ImageView,
-	    essen1ImageView,
+    		tischImageView,
+    		essen6ImageView,
+    		essen4ImageView,
+    		essen7ImageView,		
+    		essen5ImageView,
+    		essen2ImageView,		
+    		essen3ImageView,
+    	    essen1ImageView,
 
 // Plastik und Müll	    
-		muellDeponieImageView,
-		voegelImageView1,
-		voegelImageView2,
-	
+    		muellDeponieImageView,
+    		voegelImageView1,
+    		voegelImageView2,
+    	
 // Ressourcen der Erde
-		waldWegImageView,
-		baum3ImageView,
-		baum1ImageView,
-		baum4ImageView,
-		baum2ImageView,
+    		waldWegImageView,
+    		baum3ImageView,
+    		baum1ImageView,
+    		baum4ImageView,
+    		baum2ImageView,
 
 // Tiere und Artenvielfalt
-		erdlochImageView,
-		erdmaennchen1ImageView,
-		erdlochPatch1ImageView,
-		erdmaennchen2ImageView,
-		erdlochPatch2ImageView,
-		erdmaennchen3ImageView,
-		erdlochPatch3ImageView,
-		erdmaennchen4ImageView,
+    		erdlochImageView,
+    		erdmaennchen1ImageView,
+    		erdlochPatch1ImageView,
+    		erdmaennchen2ImageView,
+    		erdlochPatch2ImageView,
+    		erdmaennchen3ImageView,
+    		erdlochPatch3ImageView,
+    		erdmaennchen4ImageView,
 
 // Was kann ich tun
-		mondBlickImageView,
-		sterneImageView,
-		erdRotationImageView
-		);
-	
+    		mondBlickImageView,
+    		sterneImageView,
+    		komet1ImageView,
+    		komet2ImageView,
+    		komet3ImageView,
+    		erdRotationImageView
+    	);      
 
-	
+
+    	    	
 // Startbildschirm aufbauen
     VBox startLayout = new VBox(10);
     startLayout.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -759,6 +1034,9 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
     }    
 
   
+    
+    
+    
 //Startet das Quiz nach Bestätigung der Regeln   
 private void startQuiz(Stage primaryStage, String playerName, boolean showRules) {
 	if (playerName.trim().isEmpty()) {
@@ -776,43 +1054,245 @@ private void startQuiz(Stage primaryStage, String playerName, boolean showRules)
 	    }    
 
 
-//Quiz-Start Funktion (wird nach den Regeln aufgerufen)
+
+
+
 private void launchQuiz(Stage primaryStage, String playerName) {
-	quizGame.startNewGame();
+    quizGame.startNewGame();
 
-// Quiz-Layout in einem StackPane, damit Hintergrund und Buttons übereinander liegen	
- VBox quizLayout = new VBox(10);
- quizLayout.setStyle("-fx-padding: 20; -fx-alignment: center;");
- questionLabel = new Label("Frage wird geladen...");    
+// VBoxen erzeugen
+    infoBox = new VBox();
+    antwortBox = new VBox();
+    bottomBox = new VBox();
+
+// GUI-Elemente erzeugen
+    kategorieLabel = new Label();
+    questionLabel = new Label();
+    pointsLabel = new Label("Punkte: 0");
+    linkLabel = new Hyperlink();
+
+// AntwortButton erzeugen
+    answerA = new Button();
+    answerB = new Button();
+    answerC = new Button();
+    answerD = new Button();
+
+// Antwort-Buttons mit Aktionen verknüpfen
+    answerA.setOnAction(e -> checkAnswer('A'));
+    answerB.setOnAction(e -> checkAnswer('B'));
+    answerC.setOnAction(e -> checkAnswer('C'));
+    answerD.setOnAction(e -> checkAnswer('D'));
+
+// Styles setzen
+    kategorieLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;");
+    kategorieLabel.setTextAlignment(TextAlignment.CENTER);
+    
+    questionLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: white;");
+    questionLabel.setWrapText(true);
+    questionLabel.setMaxWidth(600);
+    questionLabel.setAlignment(Pos.CENTER);
+    questionLabel.setTextAlignment(TextAlignment.CENTER);
+    
+    pointsLabel.setStyle("-fx-font-size: 15px; -fx-text-fill: white;");
+    
+    linkLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #00FFFF;");
+    linkLabel.setTextAlignment(TextAlignment.CENTER);
+
+// MaxBreite für Buttons
+    answerA.setMaxWidth(200);
+    answerB.setMaxWidth(200);
+    answerC.setMaxWidth(200);
+    answerD.setMaxWidth(200);
+
+// VBox für Kategorie und Frage (oben)
+    infoBox = new VBox(10, kategorieLabel, questionLabel);
+    infoBox.setPadding(new Insets(10));
+    infoBox.setMaxWidth(600);
+    infoBox.setAlignment(Pos.CENTER);
+
+// VBox für Antwort-Buttons (Mitte)
+    antwortBox = new VBox(10, answerA, answerB, answerC, answerD);
+    antwortBox.setAlignment(Pos.CENTER);
+    antwortBox.setMaxWidth(420);
+
+// VBox für Punkte und Link (unten)
+    bottomBox = new VBox(5, pointsLabel, linkLabel);
+    bottomBox.setPadding(new Insets(10));
+    bottomBox.setMaxWidth(350);
+    bottomBox.setAlignment(Pos.CENTER);
 
 
-//AntwortButton deaktivieren nach Auswahl -> ohne Transparenz
- answerA = new Button();
- answerB = new Button();
- answerC = new Button();
- answerD = new Button();
- answerA.setOnAction(e -> checkAnswer('A'));
- answerB.setOnAction(e -> checkAnswer('B'));
- answerC.setOnAction(e -> checkAnswer('C'));
- answerD.setOnAction(e -> checkAnswer('D'));
- 
- pointsLabel = new Label("Punkte: 0");
- linkLabel = new Hyperlink();
- linkLabel.setStyle("-fx-text-fill: blue; -fx-underline: true;");
+// Alle Container in StackPane (übereinander)
+    StackPane quizRoot = new StackPane(backgroundPane, infoBox, antwortBox, bottomBox);
 
- quizLayout.getChildren().addAll(
-     kategorieLabel,
-     questionLabel,
-     answerA, answerB, answerC, answerD,
-     pointsLabel,
-     linkLabel
- );
- 
+// Szene anzeigen
+    Scene quizScene = new Scene(quizRoot, 800, 600);
+    primaryStage.setScene(quizScene);
+    primaryStage.show();
 
- StackPane quizRoot = new StackPane(backgroundPane, quizLayout);
- primaryStage.setScene(new Scene(quizRoot, 800, 600));
- loadNextQuestion();
-} 
+// Erste Frage laden (setzt auch die Kategorie)
+    loadNextQuestion();
+
+// Layout anwenden, nachdem Kategorie gesetzt wurde
+    applyKategorieLayout(quizGame.getKategorie(), infoBox, antwortBox, bottomBox);
+}
+
+
+
+
+
+private void applyKategorieLayout(Kategorie kategorie, VBox infoBox, VBox antwortBox, VBox bottomBox) {
+    switch (kategorie) {
+        case RESSOURCEN_DER_ERDE:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(300, 200, 250, 200));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+            
+            
+        case PLASTIK_UND_MUELL:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(250, 200, 250, 200));
+            antwortBox.setMaxWidth(480);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 00, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+        	
+            
+        case ERNAEHRUNG_UND_LEBENSMITTELVERSCHWENDUNG:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(250, 200, 300, 200));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+            
+                       
+        case KLIMAWANDEL_UND_ENERGIE:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(300, 400, 250, 50));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+            
+                       
+        case TIERE_UND_ARTENVIELFALT:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(350, 500, 450, 50));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+            
+            
+        case WAS_KANN_ICH_TUN:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(380, 50, 250, 550));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+            
+             
+// Falls keine Kategorie gefunden wird:            
+        default:
+// Top: Kategorie und Frage:
+            StackPane.setAlignment(infoBox, Pos.TOP_CENTER);
+            StackPane.setMargin(infoBox, new Insets(10, 100, 450, 100));
+            infoBox.setMaxWidth(700);
+            infoBox.setPadding(new Insets(20));
+            infoBox.setAlignment(Pos.CENTER);
+            infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
+// Middle: AntwortButtons:
+            StackPane.setAlignment(antwortBox, Pos.CENTER);
+            StackPane.setMargin(antwortBox, new Insets(300, 200, 250, 200));
+            antwortBox.setMaxWidth(800);
+            antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
+// Bottom: Punkte und Link:
+            StackPane.setAlignment(bottomBox, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(bottomBox, new Insets(700, 10, 10, 10));
+            bottomBox.setMaxWidth(800);
+            bottomBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 10;");
+            break;
+    		}
+			}
+
+
+
 
 
 private void checkAnswer(char antwort) {
@@ -856,7 +1336,6 @@ private void checkAnswer(char antwort) {
 		}
 		}
 		}
-
 	
 // Link sofort nach Antwort anzeigen:
 	String link = quizGame.getLink();
@@ -864,7 +1343,11 @@ private void checkAnswer(char antwort) {
 			linkLabel.setText("Quelle: " + link.replace("http://", "").replace("https://", ""));
 			linkLabel.setOnAction(event -> getHostServices().showDocument(link));
 	    }
- 
+
+		
+		
+		
+		
 // Button vollständig sichtbar halten obwohl deaktiviert:
 	new Timeline(new KeyFrame(Duration.seconds(4.0), e -> { 
 		answerA.setStyle("-fx-opacity: 1.0;");
@@ -882,81 +1365,82 @@ private void checkAnswer(char antwort) {
 	    	})).play();
 			}
 
+
+
+
+
 //Lädt die nächste Frage und aktualisiert die Antwortmöglichkeiten
 private void loadNextQuestion() {
 	enableAllButtons();
 		String question = quizGame.getNextQuestion();
 	    	if (question != null) {
 	        	questionLabel.setText(question);
-	        	String[] answers = quizGame.getAnswers();
+	        	String[] answers = quizGame.getAnswers();       	
 
 // In der GUI: Formatiert die Kategorie (z. B. "KLIMA_WANDEL" → "Klima wandel") für die Anzeige.        
 	    String lesbareKategorie = QuizGame.formatKategorie(quizGame.getKategorie());
 	    
 // Setzt den Text des Kategorie-Labels in der Benutzeroberfläche auf die formatierte Kategorie.    
 	       		kategorieLabel.setText("Kategorie: " + lesbareKategorie);
+	       		
+	       		applyKategorieLayout(quizGame.getKategorie(), infoBox, antwortBox, bottomBox);
 
 	       		
 // Nur bei Fragen der Kategorie: Klimawandel und Energie: Bilder sichtbar
-	 boolean showAKWBg = quizGame.getKategorie() == Kategorie.KLIMAWANDEL_UND_ENERGIE;
-     	akwImageView.setVisible(showAKWBg);
-     	rauchImageView1.setVisible(showAKWBg);
-     	rauchImageView2.setVisible(showAKWBg);    	       		
+	 boolean showKlimawandelUndEnergieBg = quizGame.getKategorie() == Kategorie.KLIMAWANDEL_UND_ENERGIE;
+     	akwImageView.setVisible(showKlimawandelUndEnergieBg);
+     	rauchImageView1.setVisible(showKlimawandelUndEnergieBg);
+     	rauchImageView2.setVisible(showKlimawandelUndEnergieBg);    	       		
 	       		
 // Nur bei Fragen der Kategorie: Ernährung und Lebensmittelverschwendung: Bild sichtbar
-   	 boolean showTischBg = quizGame.getKategorie() == Kategorie.ERNAEHRUNG_UND_LEBENSMITTELVERSCHWENDUNG;
-   	 	tischImageView.setVisible(showTischBg); 
-   	 	essen1ImageView.setVisible(showTischBg);
-   	 	essen2ImageView.setVisible(showTischBg);
-   	 	essen3ImageView.setVisible(showTischBg);
-   	 	essen4ImageView.setVisible(showTischBg);
-   	 	essen5ImageView.setVisible(showTischBg);
-   	 	essen6ImageView.setVisible(showTischBg);
-   	 	essen7ImageView.setVisible(showTischBg);
-
-   	       		
+   	 boolean showErnaehrungUndLebensmittelverschwendungBg = quizGame.getKategorie() == Kategorie.ERNAEHRUNG_UND_LEBENSMITTELVERSCHWENDUNG;
+   	 	tischImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg); 
+   	 	essen1ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen2ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen3ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen4ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen5ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen6ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+   	 	essen7ImageView.setVisible(showErnaehrungUndLebensmittelverschwendungBg);
+	       		
 // Nur bei Fragen der Kategorie: Plastik und Müll: Bild sichtbar
-   	 boolean showMuellDeponieBg = quizGame.getKategorie() == Kategorie.PLASTIK_UND_MUELL;
-      	muellDeponieImageView.setVisible(showMuellDeponieBg);
-      	voegelImageView1.setVisible(showMuellDeponieBg);
-      	voegelImageView2.setVisible(showMuellDeponieBg);
+   	 boolean showPlastikUndMuellBg = quizGame.getKategorie() == Kategorie.PLASTIK_UND_MUELL;
+      	muellDeponieImageView.setVisible(showPlastikUndMuellBg);
+      	voegelImageView1.setVisible(showPlastikUndMuellBg);
+      	voegelImageView2.setVisible(showPlastikUndMuellBg);
      	
 // Nur bei Fragen der Kategorie: Ressourcen der Erde: Bild sichtbar
-     boolean showWaldWegBg = quizGame.getKategorie() == Kategorie.RESSOURCEN_DER_ERDE;
-     waldWegImageView.setVisible(showWaldWegBg);
-     baum3ImageView.setVisible(showWaldWegBg);
-     baum1ImageView.setVisible(showWaldWegBg);
-     baum4ImageView.setVisible(showWaldWegBg);
-     baum2ImageView.setVisible(showWaldWegBg);
+     boolean ressourcenDerErdeBg = quizGame.getKategorie() == Kategorie.RESSOURCEN_DER_ERDE;
+     waldWegImageView.setVisible(ressourcenDerErdeBg);
+     baum3ImageView.setVisible(ressourcenDerErdeBg);
+     baum1ImageView.setVisible(ressourcenDerErdeBg);
+     baum4ImageView.setVisible(ressourcenDerErdeBg);
+     baum2ImageView.setVisible(ressourcenDerErdeBg);
 // Bäume in Ausgangsposition setzen
-     if (showWaldWegBg) {
+     if (ressourcenDerErdeBg) {
     	    resetBaeume();
     	}
-
-     
      	
 // Nur bei Fragen der Kategorie: Tiere- und Artenvielfalt: Bild sichtbar
-        boolean showErdlochBg = quizGame.getKategorie() == Kategorie.TIERE_UND_ARTENVIELFALT;
-     	erdlochImageView.setVisible (showErdlochBg);
-     	erdmaennchen1ImageView.setVisible(showErdlochBg);
-     	erdlochPatch1ImageView.setVisible(showErdlochBg);
-     	erdmaennchen2ImageView.setVisible(showErdlochBg);
-     	erdlochPatch2ImageView.setVisible(showErdlochBg);
-     	erdmaennchen3ImageView.setVisible(showErdlochBg);
-     	erdlochPatch3ImageView.setVisible(showErdlochBg);
-     	erdmaennchen4ImageView.setVisible(showErdlochBg);
+        boolean showTiereUndArtenvielfaltBg = quizGame.getKategorie() == Kategorie.TIERE_UND_ARTENVIELFALT;
+     	erdlochImageView.setVisible (showTiereUndArtenvielfaltBg);
+     	erdmaennchen1ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdlochPatch1ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdmaennchen2ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdlochPatch2ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdmaennchen3ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdlochPatch3ImageView.setVisible(showTiereUndArtenvielfaltBg);
+     	erdmaennchen4ImageView.setVisible(showTiereUndArtenvielfaltBg);
  	
-   	
 // Nur bei Fragen der Kategorie: Was kann ich tun?: Bild sichtbar   
-     	boolean showMondBlickBg = quizGame.getKategorie() == Kategorie.WAS_KANN_ICH_TUN;
-     	mondBlickImageView.setVisible(showMondBlickBg);
-     	sterneImageView.setVisible(showMondBlickBg);
-     	erdRotationImageView.setVisible(showMondBlickBg);
-     	
+     	boolean showWasKannIchTunBg = quizGame.getKategorie() == Kategorie.WAS_KANN_ICH_TUN;
+     	mondBlickImageView.setVisible(showWasKannIchTunBg);
+     	sterneImageView.setVisible(showWasKannIchTunBg);
+     	komet1ImageView.setVisible(showWasKannIchTunBg);
+     	komet2ImageView.setVisible(showWasKannIchTunBg);
+     	komet3ImageView.setVisible(showWasKannIchTunBg);
+     	erdRotationImageView.setVisible(showWasKannIchTunBg);
 
-   
-     	
-     	
      	
 //Setzt den Text (Inhalt) in die Antwortbuttons        
 	answerA.setText("A) " + answers[0]);
@@ -987,6 +1471,7 @@ private void loadNextQuestion() {
 	}
 
 
+
 // Variable: Platzhalter für die Antworten
 private Button getButtonByAnswer(char antwort) {
 	return switch (antwort) {
@@ -998,18 +1483,26 @@ private Button getButtonByAnswer(char antwort) {
 	    };
 	    }
 
+
+
+
+
 // Methode: deaktiviert Button ohne diesen grau zu machen:	
 private void disableButton(Button button) {
 	button.setMouseTransparent(true);				// keine Mausinteraktion möglich
 	button.setFocusTraversable(false);				// kein Tastaturfokus möglich;
 	}
 
+
+
 // Methode: aktiviert die Buttons wieder: 
 private void enableButton(Button button) {
 	button.setMouseTransparent(false);				// Mausinteraktion wieder erlaubt
 	button.setFocusTraversable(true);				// Tastaturfokus wieder erlaubt
 	} 	
-	    	
+	
+
+
 // Methode: Aktiviert alle AntwortButtons wieder:
 private void enableAllButtons() {
 	enableButton(answerA);
@@ -1017,6 +1510,8 @@ private void enableAllButtons() {
 	enableButton(answerC);
 	enableButton(answerD);
 	}
+
+
 
 // Methode: bringt Bäume wieder in Ursprungsposition zurück:
 private void resetBaeume() {
@@ -1038,16 +1533,19 @@ private void resetBaeume() {
 }
 
 
+
 // Beendet das Quiz und zeigt die Endpunktzahl an
 private void endQuiz() {
 	showAlert("Quiz Beendet", "Du hast " + quizGame.getPunkte() + " Punkte erreicht!");
 	}
 
+
+
 // Methode um die Regeln in einem Dialogfenster anzuzeigen 
 private void showRulesDialog(Stage primaryStage, String playerName) {
 	if (rulesStage != null && rulesStage.isShowing())
 		return;
-	    	
+	
 // Erstellt ein weiteres Label für "📜 Spielregeln 📜" mit größerer Schrift
 	Label rulesTitleLabel = new Label("\uD83D\uDCDC Spielregeln \uD83D\uDCDC");
 	      rulesTitleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight:bold;");	      
@@ -1069,6 +1567,8 @@ private void showRulesDialog(Stage primaryStage, String playerName) {
 	    	   launchQuiz(primaryStage, playerName);
 	    	   });
 
+	       
+	       
 // Layout für das Regelfenster:
 	VBox vbox = new VBox(10, rulesTitleLabel, rulesTextLabel, startQuizButton);
 	vbox.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -1087,13 +1587,14 @@ private void showRulesDialog(Stage primaryStage, String playerName) {
 		root.getChildren().add(overlay);
 		}
 
+	
+	
 // Erstelle eine Scene für das benutzerdefinierte Fenster (Spielregeln)	
 	Scene dialogScene = new Scene(vbox, 400, 350);
 		rulesStage = new Stage();
 		rulesStage.setTitle("📜 Spielregeln 📜");
 		rulesStage.setScene(dialogScene);
 		rulesStage.show();
-
 		rulesStage.setOnCloseRequest(event -> {
 			event.consume();
 				if (primaryStage.getScene().getRoot() instanceof Pane paneRoot) {
@@ -1104,6 +1605,7 @@ private void showRulesDialog(Stage primaryStage, String playerName) {
 	                launchQuiz(primaryStage, playerName);
 					});
 	    			}
+
 
 
 // Zeigt eine allgemeine Benachrichtigung an

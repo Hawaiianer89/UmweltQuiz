@@ -81,6 +81,14 @@ public String getLink() {
 	return null;  // Rückgabe von null, wenn keine Frage angezeigt wird
     }
 
+// Gibt die aktuelle Kategorie wieder zurück 
+public Kategorie getAktuelleKategorie() {
+    if (aktuelleFrageIndex > 0 && aktuelleFrageIndex <= fragenListe.size()) {
+        return fragenListe.get(aktuelleFrageIndex - 1).getKategorie();
+    }
+    return null;
+}
+
 
 // Gibt zurück, ob das Quiz zu Ende ist
 public boolean isQuizFinished() {
