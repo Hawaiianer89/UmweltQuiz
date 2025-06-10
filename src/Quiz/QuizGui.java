@@ -17,7 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;			// Importiert-Layout, ein generisches Layout zur Positionierung von GUI-Elementen.
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;			// Importiert VBox-Layout, das Elemente vertikal untereinander anordnet.
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;				// Schriftarten, größe eines Textes in der GUI
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 
@@ -98,8 +100,9 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
     private VBox infoBox;		// Kategorie und Frage
     private VBox antwortBox;	// AntwortButtons
     private VBox bottomBox;		// Punktzahl und Link
-
     
+  
+    private StackPane quizRoot;
     
 
 
@@ -221,10 +224,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause1VorZweitemEinblenden,
             essen1ZweitesEinblenden
         	);
+// Animation endlos wiederholen:
+    		animationEssen1.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen1.play();
-// Animation endlos wiederholen:
-        	animationEssen1.setCycleCount(Animation.INDEFINITE);
+
  
         
 // Lebensmittel2 hinzufügen:
@@ -264,11 +268,12 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause2VorZweitemEinblenden,
             essen2ZweitesEinblenden
         	);
+// Animation endlos wiederholen:
+    		animationEssen2.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen2.play();
-// Animation endlos wiederholen:
-        	animationEssen2.setCycleCount(Animation.INDEFINITE);
      
+        	
         
 // Lebensmittel3 hinzufügen:
         essen3ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/Trocken2.png").toExternalForm()));
@@ -307,10 +312,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause3VorZweitemEinblenden,
             essen3ZweitesEinblenden
         );
+// Animation endlos wiederholen:
+    		animationEssen3.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen3.play();
-// Animation endlos wiederholen:
-        	animationEssen3.setCycleCount(Animation.INDEFINITE);
+
               
         	
 // Lebensmittel4 hinzufügen:
@@ -350,11 +356,12 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause4VorZweitemEinblenden,
             essen4ZweitesEinblenden
         );
+// Animation endlos wiederholen:
+    		animationEssen4.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen4.play();
-// Animation endlos wiederholen:
-        	animationEssen4.setCycleCount(Animation.INDEFINITE);
               
+        	
         	
 // Lebensmittel5 hinzufügen:
         essen5ImageView = new ImageView (new Image(getClass().getResource("/images/Ernaehrung_und_Lebensmittelverschwendung/TüteLebensmittel1.png").toExternalForm()));
@@ -394,10 +401,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause5VorZweitemEinblenden,
             essen5ZweitesEinblenden
         	);
+// Animation endlos wiederholen:
+    	animationEssen5.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen5.play(); 
-// Animation endlos wiederholen:
-        	animationEssen5.setCycleCount(Animation.INDEFINITE);
+        	
         	
               
 // Lebensmittel6 hinzufügen:
@@ -437,10 +445,11 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause6VorZweitemEinblenden,
             essen6ZweitesEinblenden
         	);
+// Animation endlos wiederholen:
+    	animationEssen6.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen6.play(); 
-// Animation endlos wiederholen:
-        	animationEssen6.setCycleCount(Animation.INDEFINITE);
+
         	
                
 // Lebensmittel7 hinzufügen:
@@ -480,10 +489,10 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
             pause7VorZweitemEinblenden,
             essen7ZweitesEinblenden
         	);
+// Animation endlos wiederholen:
+    	animationEssen7.setCycleCount(Animation.INDEFINITE);
 // Animation starten
         	animationEssen7.play();
-// Animation endlos wiederholen:
-        	animationEssen7.setCycleCount(Animation.INDEFINITE);
         
  
         
@@ -878,7 +887,7 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
         
 // Drehende Erde als Gif hinzufügen      
         erdRotationImageView = new ImageView (new Image(getClass().getResource("/images/Was_kann_ich_tun/globe1.gif").toExternalForm()));
-        erdRotationImageView.setX(180);
+        erdRotationImageView.setX(10);
         erdRotationImageView.setY(100);
         erdRotationImageView.setFitWidth(500);
         erdRotationImageView.setFitHeight(400);
@@ -1082,7 +1091,8 @@ private void launchQuiz(Stage primaryStage, String playerName) {
     answerB.setOnAction(e -> checkAnswer('B'));
     answerC.setOnAction(e -> checkAnswer('C'));
     answerD.setOnAction(e -> checkAnswer('D'));
-
+    
+    
 // Styles setzen
     kategorieLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;");
     kategorieLabel.setTextAlignment(TextAlignment.CENTER);
@@ -1099,10 +1109,10 @@ private void launchQuiz(Stage primaryStage, String playerName) {
     linkLabel.setTextAlignment(TextAlignment.CENTER);
 
 // MaxBreite für Buttons
-    answerA.setMaxWidth(200);
-    answerB.setMaxWidth(200);
-    answerC.setMaxWidth(200);
-    answerD.setMaxWidth(200);
+//    answerA.setMaxWidth(250);
+//    answerB.setMaxWidth(250);
+//    answerC.setMaxWidth(250);
+//    answerD.setMaxWidth(250);
 
 // VBox für Kategorie und Frage (oben)
     infoBox = new VBox(10, kategorieLabel, questionLabel);
@@ -1120,11 +1130,12 @@ private void launchQuiz(Stage primaryStage, String playerName) {
     bottomBox.setPadding(new Insets(10));
     bottomBox.setMaxWidth(350);
     bottomBox.setAlignment(Pos.CENTER);
+    
 
 
 // Alle Container in StackPane (übereinander)
-    StackPane quizRoot = new StackPane(backgroundPane, infoBox, antwortBox, bottomBox);
-
+    quizRoot = new StackPane(backgroundPane, infoBox, antwortBox, bottomBox);
+    
 // Szene anzeigen
     Scene quizScene = new Scene(quizRoot, 800, 600);
     primaryStage.setScene(quizScene);
@@ -1257,7 +1268,7 @@ private void applyKategorieLayout(Kategorie kategorie, VBox infoBox, VBox antwor
             infoBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.2); -fx-background-radius: 20;");
 // Middle: AntwortButtons:
             StackPane.setAlignment(antwortBox, Pos.CENTER);
-            StackPane.setMargin(antwortBox, new Insets(380, 50, 250, 550));
+            StackPane.setMargin(antwortBox, new Insets(280, 80, 280, 400));
             antwortBox.setMaxWidth(800);
             antwortBox.setStyle("-fx-background-color: rgba(25, 25, 25, 0.0); -fx-background-radius: 15;");
 // Bottom: Punkte und Link:
@@ -1370,20 +1381,27 @@ private void checkAnswer(char antwort) {
 
 
 //Lädt die nächste Frage und aktualisiert die Antwortmöglichkeiten
-private void loadNextQuestion() {
+private void loadNextQuestion() {	
+	
+// Prüfen ob das Quiz beendet ist:
+	if (quizGame.isQuizFinished()) {
+		endQuiz();
+			return;
+	}
+	
 	enableAllButtons();
-		String question = quizGame.getNextQuestion();
-	    	if (question != null) {
-	        	questionLabel.setText(question);
-	        	String[] answers = quizGame.getAnswers();       	
+	
+	String question = quizGame.getNextQuestion();
+	if (question != null) {
+		questionLabel.setText(question);
+	   	String[] answers = quizGame.getAnswers();       	
 
 // In der GUI: Formatiert die Kategorie (z. B. "KLIMA_WANDEL" → "Klima wandel") für die Anzeige.        
-	    String lesbareKategorie = QuizGame.formatKategorie(quizGame.getKategorie());
+	    String lesbareKategorie = QuizGame.formatKategorie(quizGame.getKategorie());	
 	    
 // Setzt den Text des Kategorie-Labels in der Benutzeroberfläche auf die formatierte Kategorie.    
-	       		kategorieLabel.setText("Kategorie: " + lesbareKategorie);
-	       		
-	       		applyKategorieLayout(quizGame.getKategorie(), infoBox, antwortBox, bottomBox);
+	    	kategorieLabel.setText("Kategorie: " + lesbareKategorie);
+	       	applyKategorieLayout(quizGame.getKategorie(), infoBox, antwortBox, bottomBox);
 
 	       		
 // Nur bei Fragen der Kategorie: Klimawandel und Energie: Bilder sichtbar
@@ -1536,8 +1554,59 @@ private void resetBaeume() {
 
 // Beendet das Quiz und zeigt die Endpunktzahl an
 private void endQuiz() {
-	showAlert("Quiz Beendet", "Du hast " + quizGame.getPunkte() + " Punkte erreicht!");
+
+// Punktzahl anzeigen:
+	int punkte = quizGame.getPunkte();
+	
+// Layout für Endansicht
+	VBox endScreen = new VBox (20);
+	endScreen.setAlignment(Pos.CENTER);
+	endScreen.setPadding(new Insets(30));
+	endScreen.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6); -fx-background-radius: 20;");
+	
+	Label endMessage = new Label ("Quiz beendet!");
+	endMessage.setFont(Font.font("Arial", FontWeight.BOLD, 32));
+	endMessage.setTextFill(Color.WHITE);
+	
+	Label punktzahlLabel = new Label ("Du hast " + punkte + " Punkte erreicht.");
+	punktzahlLabel.setFont(Font.font("Arial", 24));
+	punktzahlLabel.setTextFill(Color.WHITE);
+
+// Neustart und Beenden Button hinzufügen:
+	Button restartButton = new Button ("🔁 Neustart 🔁");
+	Button exitButton = new Button ("❌ Beenden ❌");
+// Schrift für neue Buttons setzen:
+	restartButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 16));
+	exitButton.setFont(Font.font("Arial", FontWeight.SEMI_BOLD, 16));
+// Farbe für neue Buttons setzen:
+	restartButton.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8); -fx-background-radius: 10;");
+	exitButton.setStyle("-fx-background-color: rgba(255, 100, 100, 0.8); -fx-background-radius: 10;");
+	
+// Button-Aktionen
+    restartButton.setOnAction(e -> {
+        quizGame.startNewGame();
+        quizRoot.getChildren().remove(endScreen);  // Endanzeige entfernen
+        infoBox.setVisible(true);                  // GUI-Elemente wieder anzeigen
+        antwortBox.setVisible(true);
+        bottomBox.setVisible(true);
+        loadNextQuestion();                        // Neue Frage laden
+    });
+
+    exitButton.setOnAction(e -> Platform.exit());
+
+// GUI zusammenbauen
+    endScreen.getChildren().addAll(endMessage, punktzahlLabel, restartButton, exitButton);
+
+// GUI-Elemente während Endansicht ausblenden
+    infoBox.setVisible(false);
+    antwortBox.setVisible(false);
+    bottomBox.setVisible(false);
+
+// Endanzeige zum quizRoot hinzufügen
+    quizRoot.getChildren().add(endScreen);
 	}
+	
+	
 
 
 
