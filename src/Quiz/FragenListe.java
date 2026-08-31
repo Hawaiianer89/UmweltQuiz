@@ -204,7 +204,7 @@ private void fragenHinzufuegen() {
 				"Was ist der Hauptgrund für steigende Meeresspiegel?",
 				"Mehr Regenfälle", "Mehr Fische im Wasser", "Erd- und Seebeben", "Schmelzende Gletscher und Polkappen",
 				'D',
-				"hgttps://www.geomar.de/entdecken/meeresspiegel",
+				"https://www.geomar.de/entdecken/meeresspiegel",
 				Kategorie.KLIMAWANDEL_UND_ENERGIE
 				));
 		
