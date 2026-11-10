@@ -46,7 +46,9 @@ import javafx.util.Duration;						// Zeitdauer,                   gibt ZeitabstÃ
 public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Application und ist somit eine JavaFX-Anwendung.
     private QuizGame quizGame;								// Ein Objekt der Klasse QuizGame, das die Spiellogik verwaltet (Fragen, Punkte, etc.).
 
-// GUI-Elemente
+//=====================================================================================================================
+    
+    // GUI-Elemente
     private Label questionLabel;
     private Button answerA, answerB, answerC, answerD;
     private Label pointsLabel;
@@ -54,6 +56,8 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
     private Label kategorieLabel;
     private Stage rulesStage; 
 
+// -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+    
 // Hintergrund-Bilder
     private Pane backgroundPane;
 
@@ -110,7 +114,7 @@ public class QuizGui extends Application {					// Die Klasse QuizGui erbt von Ap
   
     private StackPane quizRoot;
     
-
+ // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
     public static void main(String[] args) {			// main-Methode ist der Einstiegspunkt der Anwendung.
     	launch(args);									// Startet die JavaFX-Anwendung â€“ ruft automatisch die start(Stage stage)-Methode auf
