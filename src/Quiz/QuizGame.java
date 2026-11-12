@@ -31,13 +31,17 @@ public class QuizGame {
 
 //=====================================================================================================================
 
-//     __  __     _   _            _               _      __ _      _                  _ 
-//    |  \/  |___| |_| |_  ___  __| |___ _ _    __| |___ / _(_)_ _ (_)___ _ _ ___ _ _ (_)
-//    | |\/| / -_)  _| ' \/ _ \/ _` / -_) ' \  / _` / -_)  _| | ' \| / -_) '_/ -_) ' \ _ 
-//    |_|  |_\___|\__|_||_\___/\__,_\___|_||_| \__,_\___|_| |_|_||_|_\___|_| \___|_||_(_)
-                                                                                       
+//     _  __            _            _   _          _ 
+//    | |/ /___ _ _  __| |_ _ _ _  _| |_| |_ ___ _ (_)
+//    | ' </ _ \ ' \(_-<  _| '_| || | / /  _/ _ \ '_| 
+//    |_|\_\___/_||_/__/\__|_|  \_,_|_\_\\__\___/_|(_)
+//                                                    
     
-	// Konstruktor
+    // Fragen und Antwortmöglichkeiten abrufen,
+    // Fragenliste mischen,
+    // punkte auf 0 setzen,
+    // aktuelleFrageIndex auf 0 setzen,
+    // playerName übernehmen:
 	public QuizGame() {
 		fragenListe = new FragenListe().getQuestions();
 	    Collections.shuffle(fragenListe); // Fragen mischen
@@ -45,9 +49,16 @@ public class QuizGame {
 	    aktuelleFrageIndex = 0;
 	    playerName = "";
 	    }
-	
-// -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	    
+//=====================================================================================================================    
+    
+    
+//     __  __     _   _            _               _      __ _      _                  _ 
+//    |  \/  |___| |_| |_  ___  __| |___ _ _    __| |___ / _(_)_ _ (_)___ _ _ ___ _ _ (_)
+//    | |\/| / -_)  _| ' \/ _ \/ _` / -_) ' \  / _` / -_)  _| | ' \| / -_) '_/ -_) ' \ _ 
+//    |_|  |_\___|\__|_||_\___/\__,_\___|_||_| \__,_\___|_| |_|_||_|_\___|_| \___|_||_(_)
+       
+	
 	// Setzt den Spielernamen:
 	public void setPlayerName(String name) {
 		this.playerName = name;
@@ -62,7 +73,7 @@ public class QuizGame {
 
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Startet ein neues Spiel (setzt alles zurück)
+	// Startet ein neues Spiel (setzt alles zurück):
 	public void startNewGame() {
 		fragenListe = new FragenListe().getQuestions();
 			Collections.shuffle(fragenListe);
@@ -72,7 +83,7 @@ public class QuizGame {
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Startet das Quiz
+	// Fragen füllen:
 	public String getNextQuestion() {
 		if (aktuelleFrageIndex < fragenListe.size()) {
 			Question frage = fragenListe.get(aktuelleFrageIndex);
@@ -96,41 +107,47 @@ public class QuizGame {
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Überprüft die Antwort und gibt Feedback
+	// Überprüft die UserAntwort:
+	// wenn Antwort richtig -> +10 Punkte
 	public boolean checkAnswer(char antwort) {
 		Question frage = fragenListe.get(aktuelleFrageIndex - 1);
 			if (antwort == frage.getCorrectAnswer()) {
 				punkte += 10;
-			return true; // Richtig
+				
+				return true; // Richtig
 	        }
+			
 	        return false; // Falsch
 	    }
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Gibt die aktuelle Punktzahl zurück
+	// Gibt die aktuelle Punktzahl zurück:
 	public int getPunkte() {
 		return punkte;
 	    }
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Gibt den Link zur Quelle der Frage zurück
+	// Gibt den Link zur Quelle der Frage zurück:
 	public String getLink() {
 		if (aktuelleFrageIndex > 0 && aktuelleFrageIndex <= fragenListe.size()) {
 			Question frage = fragenListe.get(aktuelleFrageIndex - 1);
-		return frage.getLink();
+			
+			return frage.getLink();
 		}
+		
 		return null;  // Rückgabe von null, wenn keine Frage angezeigt wird
 	    }
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	
-	// Gibt die aktuelle Kategorie wieder zurück 
+	// Gibt die aktuelle Kategorie wieder zurück:
 	public Kategorie getAktuelleKategorie() {
 	    if (aktuelleFrageIndex > 0 && aktuelleFrageIndex <= fragenListe.size()) {
 	        return fragenListe.get(aktuelleFrageIndex - 1).getKategorie();
 	    }
+	    
 	    return null;
 	}
 	
@@ -143,27 +160,29 @@ public class QuizGame {
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	    
-	// Methode: Gibt die korrekte Antwort der aktuellen Frage zurück
+	// Gibt die korrekte Antwort der aktuellen Frage zurück:
 	public char getCorrectAnswer() {
 		if(aktuelleFrageIndex > 0 && aktuelleFrageIndex <= fragenListe.size()) {
 			Question frage = fragenListe.get(aktuelleFrageIndex - 1);
-	// gibt die korrekte Antwort zurück
-		return frage.getCorrectAnswer();
+			
+			// gibt die korrekte Antwort zurück
+			return frage.getCorrectAnswer();
+			
 	    	}
-	// Rückgabe eines leeren Zeichens, falls keine Frage vorhanden ist
+		// Rückgabe eines leeren Zeichens, falls keine Frage vorhanden ist:
 		return ' ';
 	    }
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	    
-	// Methode: Gibt die Kategorie der aktuellen Frage zurück
+	// gibt die Kategorie der aktuellen Frage zurück:
 	public Kategorie getKategorie() {
 		return this.kategorie;
 	}
 	
 // -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 	    
-	// Methode: setzt die Kategorie in die aktuelle Frage:
+	// setzt die Kategorie in die aktuelle Frage:
 	public void setKategorie(Kategorie kategorie) {
 		this.kategorie = kategorie;
 	}

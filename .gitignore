@@ -1,0 +1,16 @@
+
+
+
+
+# Folder
+.git/
+.settings/
+bin/
+readMe/
+
+
+# Data
+.classpath
+.project
+*.class
+
